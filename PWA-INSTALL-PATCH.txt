@@ -1,0 +1,48 @@
+FATE'S PASSAGE — ADD THIS TO THE <head> OF BOTH:
+- CharacterCreation.html
+- Fatespassage.html
+
+Do not replace either game file. Add these lines inside its existing <head> section:
+
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" href="./icons/fates-passage-180.png">
+<meta name="theme-color" content="#080607">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+Then add this script inside the same <head> section (or before </body>):
+
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("./sw.js", { scope: "./" })
+    .catch(error => console.warn("Offline setup:", error));
+}
+</script>
+
+The new index.html already registers sw.js and waits for the first cache installation before opening CharacterCreation.html. These additions ensure direct visits to either game screen also register the worker and that Safari can discover the app manifest.
+
+UPLOAD THESE FILES/FOLDERS TO THE REPOSITORY ROOT:
+- index.html (replace the existing one)
+- sw.js (replace the existing one)
+- manifest.webmanifest (replace the existing one)
+- icons/ (upload both PNG icons)
+
+Keep these existing game files exactly named:
+- CharacterCreation.html
+- Fatespassage.html
+
+IMPORTANT FIRST-RUN REQUIREMENT:
+Open the game while connected to the internet and leave it open until the studio/character creation screen appears. The service worker attempts to cache both large game HTML files and the Three.js library. The opening studio video is embedded inside CharacterCreation.html, so it is included when that HTML file is cached. Optional map/sheet/forge/tome files are cached if those exact files exist at the repository root.
+
+Then test:
+1. Open the game once online.
+2. Add it to the iPhone Home Screen from Safari's Share menu.
+3. Open it from the Home Screen while online once.
+4. Turn on Airplane Mode and reopen it.
+5. Test Continue, character creation, and gameplay.
+
+NOTES:
+- Offline readiness is not guaranteed until the first online cache completes.
+- iPhone storage management can evict website data; periodically open the game online to refresh it.
+- Google Fonts and Three.js are cached when available. Any other future external services/assets must also be added to the offline strategy.
+- Saved character data remains in browser storage; changing the cache version does not intentionally clear localStorage.
