@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>Fate's Passage</title>
+<style>html,body{width:100%;height:100%;margin:0;background:#000;overflow:hidden}</style>
+<script>
+/* The character-creation page contains the opening studio video. */
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("./sw.js").catch(() => {});
+}
+window.location.replace("./charactercreation.html");
+</script>
+</head>
+<body>
+<noscript><a href="./charactercreation.html">Start Fate's Passage</a></noscript>
+</body>
+</html>
