@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+  <meta
+    name="theme-color"
+    content="#0b0b14"
+  >
+  <meta
+    name="apple-mobile-web-app-capable"
+    content="yes"
+  >
+  <meta
+    name="apple-mobile-web-app-status-bar-style"
+    content="black-translucent"
+  >
+  <meta
+    name="apple-mobile-web-app-title"
+    content="Fate's Passage"
+  >
+  <title>Fate's Passage</title>
+  <!-- PWA manifest -->
+  <link
+    rel="manifest"
+    href="./manifest.json"
+  >
+  <!-- iPhone Home Screen icon -->
+  <link
+    rel="apple-touch-icon"
+    href="./IMG_7733.jpeg"
+  >
+  <!--
+    Fate's Passage
+    Main entry point.
+    The game begins at:
+    ./character-creation.html
+    Current game files:
+      ./character-creation.html
+      ./fates-passage.html
+      ./arkaedon-map.html
+      ./character-sheet.html
+      ./spell-tome.html
+      ./melding-forge.html
+  -->
+  <script>
+    /*
+      Always enter the game through the current
+      character creation page.
+      replace() keeps this in the same browser tab
+      and prevents the obsolete launcher page from
+      appearing in browser history.
+    */
+    window.location.replace("./character-creation.html");
+  </script>
+  <noscript>
+    <meta
+      http-equiv="refresh"
+      content="0; url=./character-creation.html"
+    >
+  </noscript>
+</head>
+<body>
+  <main>
+    <p>Loading Fate's Passage...</p>
+    <p>
+      <a href="./character-creation.html">
+        Enter Fate's Passage
+      </a>
+    </p>
+  </main>
+  <!--
+    Register the existing service worker.
+    IMPORTANT:
+    sw.js is registered here; it is NOT a page
+    that the player should navigate to.
+  -->
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register("./sw.js")
+          .then(function () {
+            console.log(
+              "Fate's Passage offline mode enabled."
+            );
+          })
+          .catch(function (error) {
+            console.error(
+              "Fate's Passage offline mode failed:",
+              error
+            );
+          });
+      });
+    }
+  </script>
+</body>
+</html>
