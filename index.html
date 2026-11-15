@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<title>Fate’s Passage</title>
+<noscript><meta http-equiv="refresh" content="0; url=./studio-title.html"></noscript>
+<style>html, body { height: 100%; margin: 0; background: #000; }</style>
+<script>
+(function () {
+  var done = false;
+  function go() { if (done) return; done = true; location.replace("./studio-title.html"); }
+  try {
+    if ("serviceWorker" in navigator) {
+      // Registers the offline cache (sw.js) before leaving, so every page is saved on the very first visit.
+      var p = navigator.serviceWorker.register("sw.js");
+      if (navigator.serviceWorker.controller) go();          // already cached on an earlier visit: go straight in
+      else {
+        // first visit: wait briefly for the cache to install, never longer than 2.5s
+        setTimeout(go, 2500);
+        p.then(function (reg) {
+          var w = reg.installing || reg.waiting || reg.active;
+          if (!w || w.state === "activated") return go();
+          w.addEventListener("statechange", function () { if (w.state === "activated") go(); });
+        }).catch(go);
+      }
+    } else go();
+  } catch (e) { go(); }
+})();
+</script>
+</head>
+<body></body>
+</html>
