@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fate's Passage</title>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <style>
+    html,body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background: #05070b;
+      color: #fff;
+      font-family: Georgia, serif;
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .launch {
+      text-align: center;
+      padding: 40px 24px;
+    }
+
+    h1 {
+      margin: 0 0 28px;
+      font-size: clamp(38px, 9vw, 76px);
+      letter-spacing: 4px;
+      text-shadow: 0 0 20px rgba(255,255,255,.25);
+    }
+
+    a {
+      display: inline-block;
+      padding: 15px 32px;
+      border: 1px solid rgba(255,255,255,.35);
+      border-radius: 8px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 18px;
+      letter-spacing: 1px;
+      background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.04));
+      box-shadow: inset 0 1px rgba(255,255,255,.15), 0 8px 30px rgba(0,0,0,.4);
+    }
+
+    a:hover {
+      background: rgba(255,255,255,.16);
+    }
+  </style>
+</head>
+
+<body>
+  <main class="launch">
+    <h1>Fate's Passage</h1>
+
+    <a href="./Fate%27s%20Passage%20%E2%80%94%20Character%20Creation%203.html">
+      Start Fate's Passage
+    </a>
+  </main>
+
+  <script>
+    // Prevent an obsolete cached launcher from redirecting to an old file.
+    window.addEventListener("pageshow", function () {
+      if (location.pathname.endsWith("/") || location.pathname.endsWith("/index.html")) {
+        // Current launcher intentionally stays here until the player starts the game.
+      }
+    });
+  </script>
+</body>
+</html>
