@@ -1,0 +1,18 @@
+{
+  "name": "Fate's Passage",
+  "short_name": "Fate's Passage",
+  "description": "Fate's Passage MMORPG",
+  "start_url": "./character-creation.html",
+  "display": "standalone",
+  "background_color": "#0b0b14",
+  "theme_color": "#0b0b14",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "./IMG_7733.jpeg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ]
+}
