@@ -1,0 +1,15 @@
+{
+  "name": "FatesPassage.Editor",
+  "rootNamespace": "FatesPassage.Editor",
+  "references": [
+    "FatesPassage.Runtime"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": [],
+  "autoReferenced": false,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}
