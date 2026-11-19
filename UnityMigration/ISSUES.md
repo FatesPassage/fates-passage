@@ -38,3 +38,5 @@ Completed work is intentionally kept out of this list. Active issue numbering re
 
 ## Verification gates
 Do not mark an issue complete merely because code was committed. Require Unity compilation, relevant automated tests, Play Mode validation, and source parity review as appropriate. Keep the main branch unchanged; migration work stays on `unity-migration` until reviewed.
+
+**Progress:** The separate `fatesPassage.sheet.v1` handoff is now partially imported (resource pairs, resonance, and verified level-2 sheet bonuses). Nullable skill-charge import and the full world save remain open.
