@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace FatesPassage.Core
 {
-    /// <summary>Frame-rate-independent simulation tick scheduler.</summary>
+    /// <summary>Bounded fixed-rate simulation event source, independent of render FPS.</summary>
     public sealed class FixedTickClock : MonoBehaviour
     {
         [SerializeField, Range(10, 120)] private int ticksPerSecond = 60;
@@ -14,14 +14,10 @@ namespace FatesPassage.Core
 
         private void Update()
         {
-            double step = 1.0 / ticksPerSecond;
-            accumulator = Math.Min(accumulator + Time.unscaledDeltaTime, step * maxTicksPerFrame);
-            int count = 0;
-            while (accumulator >= step && count++ < maxTicksPerFrame)
-            {
-                Tick?.Invoke((float)step);
-                accumulator -= step;
-            }
+            int count = SimulationMath.CountTicks(ref accumulator,
+                Time.unscaledDeltaTime, ticksPerSecond, maxTicksPerFrame);
+            float step = 1f / ticksPerSecond;
+            for (int i = 0; i < count; i++) Tick?.Invoke(step);
         }
 
         private void OnDisable() => accumulator = 0;
