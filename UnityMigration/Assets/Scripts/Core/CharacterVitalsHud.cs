@@ -34,8 +34,13 @@ namespace FatesPassage.Core
         {
             if (!visible || character == null || character.Vitals == null) return;
             EnsureStyles();
-            float height = 126f;
-            var rect = new Rect(margin.x, Screen.height - height - margin.y, panelWidth, height);
+            const float height = 126f;
+            // Respect device notches/home indicators and shrink gracefully on narrow screens.
+            Rect safe = Screen.safeArea;
+            float width = Mathf.Max(180f, Mathf.Min(panelWidth, safe.width - margin.x * 2f));
+            float x = safe.xMin + margin.x;
+            float y = Screen.height - safe.yMin - height - margin.y;
+            var rect = new Rect(x, y, width, height);
             DrawRect(rect, new Color(0.025f, 0.035f, 0.055f, 0.91f));
             DrawRect(new Rect(rect.x, rect.y, rect.width, 2), new Color(0.65f, 0.47f, 0.23f, 0.95f));
             GUI.Label(new Rect(rect.x + 12, rect.y + 7, 180, 18), "FATEWALKER  /  VITALS", titleStyle);
