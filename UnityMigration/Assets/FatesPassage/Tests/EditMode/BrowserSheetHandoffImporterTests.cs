@@ -18,6 +18,26 @@ namespace FatesPassage.Tests
         }
 
         [Test]
+        public void ImportsNonNullSkillChargesAndPreservesNullSlots()
+        {
+            var template = CharacterSheetFactory.CreateCorinStarter();
+            const string json = "{\"hp\":[105,105],\"mp\":[95,95],\"en\":[95,95],\"res\":5,\"lv2\":0,\"ch\":[7,null,0]}";
+            Assert.IsTrue(BrowserSheetHandoffImporter.TryImport(json, template, out var imported, out var error), error);
+            Assert.AreEqual(7, imported.activeSkills[0].currentCharges);
+            Assert.AreEqual(20, imported.activeSkills[1].currentCharges);
+            Assert.AreEqual(0, imported.activeSkills[2].currentCharges);
+            Assert.AreEqual(22, template.activeSkills[0].currentCharges);
+        }
+
+        [Test]
+        public void RejectsSkillChargeAboveMaximum()
+        {
+            var template = CharacterSheetFactory.CreateCorinStarter();
+            const string json = "{\"hp\":[105,105],\"mp\":[95,95],\"en\":[95,95],\"res\":5,\"ch\":[23,null,null]}";
+            Assert.IsFalse(BrowserSheetHandoffImporter.TryImport(json, template, out _, out _));
+        }
+
+        [Test]
         public void LevelTwoHandoffAppliesSourceSheetBonuses()
         {
             var template = CharacterSheetFactory.CreateCorinStarter();
