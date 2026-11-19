@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace FatesPassage.Core
 {
-    /// <summary>Legacy Unity input adapter; replace with Input System actions after source control audit.</summary>
+    /// <summary>Camera-relative movement adapter with New Input System and legacy fallback.</summary>
     [RequireComponent(typeof(MovementMotor))]
     public sealed class PlayerInputAdapter : MonoBehaviour
     {
@@ -27,9 +27,7 @@ namespace FatesPassage.Core
 
         private void Update()
         {
-            sampledInput = Vector2.ClampMagnitude(
-                new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")), 1f);
-            // Fallback if no clock was assigned: exactly one simulation call per frame.
+            sampledInput = PrototypeInputReader.ReadMove();
             if (simulationClock == null) Simulate(Time.deltaTime);
         }
 
