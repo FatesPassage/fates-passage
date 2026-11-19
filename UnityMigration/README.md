@@ -85,3 +85,11 @@ The visual upgrade remains a prototype style pass using Unity primitives and gen
 
 ## Browser handoff compatibility
 `BrowserSheetHandoffImporter` reads the source game's `fatesPassage.sheet.v1` payload, validates HP/MP/Energy current-and-maximum pairs, imports Resonance, and reproduces the observed level-2 stat/helm changes. Nullable skill-charge (`ch`) transfer is intentionally deferred until a null-preserving parser is implemented. The full world save (`fatesPassage.save.v1`) remains a separate open migration task.
+
+## Modern input and combat HUD update — November 19, 2026
+- `PrototypeInputReader` now reads keyboard WASD/arrows and gamepad left stick/D-pad through Unity's Input System, with a legacy-input fallback for projects configured that way.
+- Prototype attack uses Space or gamepad south/primary button.
+- F3 diagnostics toggle now routes through the same input facade; this removes the previous Legacy Input Manager-only dependency from the diagnostics overlay.
+- The core assembly definition explicitly references `Unity.InputSystem`. Confirm the Input System package is installed in Package Manager.
+- Target status HUD now uses a compact centered RPG-style target plate with a live health bar and clear defeated state.
+- This code is committed but still requires a fresh Unity compile and Play Mode test on the user's machine. Keyboard movement has been verified before this update; gamepad and new input adapter changes are not yet verified.
