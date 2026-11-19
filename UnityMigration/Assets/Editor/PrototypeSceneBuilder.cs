@@ -119,7 +119,7 @@ namespace FatesPassage.EditorTools
             player.AddComponent<CombatFeedback>();
             player.AddComponent<Combatant>();
             player.AddComponent<MovementMotor>();
-            player.AddComponent<PlayerInputAdapter>();
+            var inputAdapter = player.AddComponent<PlayerInputAdapter>();
             var attack = player.AddComponent<PrototypeAttackController>();
 
             var enemy = Primitive(PrimitiveType.Capsule, "Training Dummy", new Vector3(0, 1.1f, 2.5f),
@@ -137,6 +137,9 @@ namespace FatesPassage.EditorTools
             cameraObject.transform.rotation = Quaternion.Euler(25, 0, 0);
             camera.clearFlags = CameraClearFlags.Skybox;
             cameraObject.AddComponent<PrototypeCameraFollow>().SetTarget(player.transform);
+            var inputSo = new SerializedObject(inputAdapter);
+            inputSo.FindProperty("cameraTransform").objectReferenceValue = cameraObject.transform;
+            inputSo.ApplyModifiedPropertiesWithoutUndo();
 
             var hud = new GameObject("Diagnostics and Vitals");
             hud.AddComponent<PerformanceHud>();
