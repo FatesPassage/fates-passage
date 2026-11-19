@@ -35,3 +35,18 @@ Call MovementMotor.Simulate from exactly one update loop. If using FixedTickCloc
 
 ### Verification status
 The new scripts were committed but have **not** been compiled or play-tested in Unity. No performance improvement is claimed until baseline/profiler comparisons are collected.
+
+## Native combat foundation — November 18, 2026
+- Portable `CharacterVitals` and `CombatMath` provide provisional resource/damage rules with EditMode tests.
+- `Combatant` connects damage to health, optional hit flash, and `Damaged`/`Defeated` events.
+- `CombatFeedback` temporarily tints compatible URP materials without replacing their shared material.
+- `CharacterVitalsHud` displays compact health/mana/stamina bars; `PerformanceHud` toggles with F3.
+- `PlayerInputAdapter` currently requires the legacy Unity Input Manager enabled (or Both) and uses Horizontal/Vertical axes.
+- The native UI is **temporary**; original character HUD, art, gameplay rules, and source assets have not yet been ported.
+
+### Validation checklist
+- [ ] Open Unity project and compile scripts
+- [ ] Run EditMode tests through Unity Test Runner
+- [ ] Create a test scene with CharacterController, MovementMotor, PlayerInputAdapter and a camera
+- [ ] Add CharacterVitalsBehaviour, Combatant, CombatFeedback, CharacterVitalsHud and verify hit feedback and resource UI
+- [ ] Verify performance and gameplay against the original HTML implementation
