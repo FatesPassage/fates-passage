@@ -41,3 +41,25 @@ The game runtime's `fatesPassage.save.v1` snapshot separately persists world pos
 ## Browser sheet handoff importer
 
 The source handoff is explicitly `{hp:[current,max], mp:[current,max], en:[current,max], res:number, lv2:0|1, ch:[...]}` under `fatesPassage.sheet.v1`. The native `BrowserSheetHandoffImporter` now imports and validates the resource pairs and resonance. For `lv2:1` it applies the source-observed level 2 state: level becomes 2, XP resets to 0, Toughness gains 3, Intellect gains 2, and Moonhowl Helm is added. The `ch` skill-charge array is intentionally not applied yet because the browser uses nullable entries and a safe null-preserving parser is still required.
+
+## Exact browser save and sheet handoff schema — November 19, 2026
+
+The original `fates-passage.html` source was re-opened from the `main` branch and inspected at the save implementation (not inferred from the native scaffold).
+
+### `fatesPassage.sheet.v1`
+The game writes `{hp:[current,max], mp:[current,max], en:[current,max], res:number, lv2:0|1, ch:[...]}`. The three resource arrays are two-element current/maximum pairs. `ch` is generated from the live skill list with `null` preserved for skills whose charge count is null. The character-sheet page applies only non-null entries by index to each active skill's current-charge field; null means leave the sheet's existing charge value unchanged. For `lv2:1`, the source applies level 2, XP 0, +3 Toughness to value and maximum, +2 Intellect to value and maximum, and replaces the head slot with Moonhowl Helm.
+
+Native work now imports this nullable charge array with a dedicated null-preserving parser, validates charge values against the corresponding source-backed skill maximum, preserves null slots, and does not mutate the template sheet. Tests cover resource import, null preservation, invalid over-maximum charges, level-two bonuses, property ordering and quoted metadata. Tests are committed but have not yet been executed in Unity.
+
+### `fatesPassage.save.v1`
+The source save snapshot is version 1 and records:
+- timestamp and world/session placement: `ts`, `inside`, `x`, `z`, `face`, `yaw`, `yawT`, `pit`, `pitT`, `zf`, `sprH`
+- companion and follower transforms: `mc`, `fx`, `companion`
+- primitive state objects: `st`, `mx`, `mer`
+- progression and world flags: `hpBase`, `rested`, `rez`, `qs`, `ohN`, `ohT`, `ohCut`, `wfLv2`
+- boss and combat: `boss`, `bp`, `sk`, `hots`, `dum`, `auto`, `tgt`
+- UI restoration fragments: `lvT`, `xpW`
+
+The source snapshot function filters `st`, `mx`, `mer`, and `boss` to primitive number/boolean/string properties. Arrays have their own structures: `mc`, `fx`, and `bp` are transform tuples; `sk` stores skill cooldowns; `hots` stores hot-over-time records; `dum` stores dummy health/root state. The restore code uses defaults and guarded sub-restores for optional/legacy fields. Inventory and corpse records are separate keys: `fatesPassage.inv.v1` and `fatesPassage.corpses.v1`.
+
+This is the confirmed source field inventory. The native importer must preserve unknown primitive keys and validate all nested arrays before applying a snapshot; UI-only fields such as `lvT` and `xpW` should be treated as presentation hints, not authoritative progression.
