@@ -1,7 +1,7 @@
 {
   "name": "FatesPassage.EditModeTests",
   "rootNamespace": "FatesPassage.Tests",
-  "references": [],
+  "references": ["FatesPassage.Core"],
   "includePlatforms": ["Editor"],
   "excludePlatforms": [],
   "allowUnsafeCode": false,
