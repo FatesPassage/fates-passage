@@ -33,7 +33,7 @@ namespace FatesPassage.Tests
         public void FindsNullableChargesRegardlessOfPropertyOrderAndQuotedText()
         {
             var template = CharacterSheetFactory.CreateCorinStarter();
-            const string json = "{\\"note\\":\\"a quoted \\\\"value\\\\" in metadata\\",\\"ch\\":[3,null,null],\\"hp\\":[105,105],\\"mp\\":[95,95],\\"en\\":[95,95],\\"res\\":5}";
+            const string json = "{\"note\":\"a quoted \\\"value\\\" in metadata\",\"ch\":[3,null,null],\"hp\":[105,105],\"mp\":[95,95],\"en\":[95,95],\"res\":5}";
             Assert.IsTrue(BrowserSheetHandoffImporter.TryImport(json, template, out var imported, out var error), error);
             Assert.AreEqual(3, imported.activeSkills[0].currentCharges);
             Assert.AreEqual(20, imported.activeSkills[1].currentCharges);
