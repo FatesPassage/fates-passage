@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace FatesPassage.Core
@@ -7,15 +8,29 @@ namespace FatesPassage.Core
     {
         [SerializeField, Min(0f)] private float armor;
         [SerializeField, Min(0f)] private float power = 10f;
+        [SerializeField] private CombatFeedback hitFeedback;
         private CharacterVitalsBehaviour vitals;
+        public event Action<float> Damaged;
+        public event Action Defeated;
         public bool IsAlive => vitals != null && vitals.Vitals != null && vitals.Vitals.IsAlive;
 
-        private void Awake() => vitals = GetComponent<CharacterVitalsBehaviour>();
+        private void Awake()
+        {
+            vitals = GetComponent<CharacterVitalsBehaviour>();
+            if (hitFeedback == null) hitFeedback = GetComponent<CombatFeedback>();
+        }
 
         public float ReceiveHit(float rawDamage)
         {
             if (!IsAlive) return 0f;
-            return vitals.Vitals.TakeDamage(CombatMath.MitigatedDamage(rawDamage, armor));
+            float applied = vitals.Vitals.TakeDamage(CombatMath.MitigatedDamage(rawDamage, armor));
+            if (applied > 0f)
+            {
+                if (hitFeedback != null) hitFeedback.Flash();
+                Damaged?.Invoke(applied);
+                if (!IsAlive) Defeated?.Invoke();
+            }
+            return applied;
         }
 
         public float Attack(Combatant target, float baseDamage)
