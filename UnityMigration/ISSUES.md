@@ -26,9 +26,9 @@ Completed work is intentionally kept out of this list. Active issue numbering re
 - Add deterministic tests for each verified mechanic.
 
 ### Issue 5 — Native Input System and controller support
-- Replace temporary Legacy Input Manager calls with Unity Input System actions.
-- Support keyboard/mouse and gamepad; add remapping and interaction prompts.
-- Preserve the currently working temporary controls until the replacement is tested.
+- [Committed] Add a shared input facade for Input System keyboard (WASD/arrows), gamepad stick/D-pad, Space/primary-button attack, and F3 diagnostics.
+- [Committed] Add the Unity.InputSystem assembly reference and remove remaining prototype Legacy Input Manager-only polling.
+- [Open verification] Recompile locally; verify keyboard, mouse focus, gamepad movement/attack, and behavior after switching Active Input Handling. Remapping and contextual prompts remain future work.
 
 ## Completed milestones (not active issues)
 - Unity Editor opens the local project after resolving duplicate assembly definition and missing preprocessor terminator.
@@ -40,3 +40,10 @@ Completed work is intentionally kept out of this list. Active issue numbering re
 Do not mark an issue complete merely because code was committed. Require Unity compilation, relevant automated tests, Play Mode validation, and source parity review as appropriate. Keep the main branch unchanged; migration work stays on `unity-migration` until reviewed.
 
 **Progress:** The separate `fatesPassage.sheet.v1` handoff is now partially imported (resource pairs, resonance, and verified level-2 sheet bonuses). Nullable skill-charge import and the full world save remain open.
+
+
+## Latest development batch — November 19, 2026
+- The input implementation is committed but not yet user-verified in Unity; do not close Issue 5 until compile and Play Mode checks pass.
+- Prototype target HUD received a cleaner centered target plate, live health bar, and defeated state.
+- Performance diagnostics now use the shared input facade and retain the compact optional F3 panel.
+- The previous keyboard movement test predates this input refactor; re-test before relying on it.
