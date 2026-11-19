@@ -48,9 +48,11 @@ namespace FatesPassage.EditorTools
             cameraObject.transform.position = new Vector3(0, 6, -9);
             cameraObject.transform.rotation = Quaternion.Euler(25, 0, 0);
             camera.clearFlags = CameraClearFlags.Skybox;
+            cameraObject.AddComponent<PrototypeCameraFollow>().SetTarget(player.transform);
 
             var hud = new GameObject("Diagnostics and Vitals");
             hud.AddComponent<PerformanceHud>();
+            hud.AddComponent<PrototypeCombatStatus>().SetEnemy(enemy.GetComponent<CharacterVitalsBehaviour>());
             var vitalsHud = hud.AddComponent<CharacterVitalsHud>();
             var so = new SerializedObject(vitalsHud);
             so.FindProperty("character").objectReferenceValue = player.GetComponent<CharacterVitalsBehaviour>();
