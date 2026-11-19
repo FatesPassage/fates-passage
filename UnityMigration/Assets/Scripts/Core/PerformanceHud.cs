@@ -5,7 +5,6 @@ namespace FatesPassage.Core
     /// <summary>Compact, optional runtime diagnostics. Hidden by default; toggle with F3.</summary>
     public sealed class PerformanceHud : MonoBehaviour
     {
-        [SerializeField] private KeyCode toggleKey = KeyCode.F3;
         [SerializeField] private bool visible;
         private float elapsed;
         private int frameCount;
@@ -15,7 +14,7 @@ namespace FatesPassage.Core
 
         private void Update()
         {
-            if (Input.GetKeyDown(toggleKey)) visible = !visible;
+            if (PrototypeInputReader.DiagnosticsTogglePressed()) visible = !visible;
             elapsed += Time.unscaledDeltaTime;
             frameCount++;
             if (elapsed < 0.5f) return;
@@ -31,10 +30,10 @@ namespace FatesPassage.Core
             {
                 style = new GUIStyle(GUI.skin.label)
                 {
-                    fontSize = 13,
+                    fontSize = Mathf.Clamp(Mathf.RoundToInt(Screen.height * 0.018f), 12, 20),
                     fontStyle = FontStyle.Bold,
                     alignment = TextAnchor.MiddleLeft,
-                    padding = new RectOffset(12, 12, 4, 4)
+                    padding = new RectOffset(14, 14, 6, 6)
                 };
                 style.normal.textColor = new Color(0.88f, 0.95f, 1f);
                 backdrop = new Texture2D(1, 1);
@@ -42,7 +41,10 @@ namespace FatesPassage.Core
                 backdrop.Apply();
                 style.normal.background = backdrop;
             }
-            GUI.Label(new Rect(12, 12, 190, 30), $"FPS {fps:0}  •  {1000f / Mathf.Max(fps, 0.01f):0.0} ms", style);
+            float margin = Mathf.Clamp(Screen.width * 0.015f, 12f, 24f);
+            float width = Mathf.Clamp(Screen.width * 0.18f, 190f, 270f);
+            style.normal.textColor = fps < 30f ? new Color(1f, 0.68f, 0.55f) : new Color(0.88f, 0.95f, 1f);
+            GUI.Label(new Rect(margin, margin, width, 36f), $"FPS {fps:0}  •  {1000f / Mathf.Max(fps, 0.01f):0.0} ms", style);
         }
 
         private void OnDestroy()
