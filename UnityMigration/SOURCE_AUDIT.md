@@ -37,3 +37,7 @@ The exact `character-sheet.html` Git blob was recovered and inspected. Its initi
 The Unity branch now contains a typed `CharacterSheetData` schema, a `CharacterSheetFactory.CreateCorinStarter()` source-backed fixture, validation, tests, and a versioned save service. These are a faithful extraction of the initial sheet fields listed above, not yet a complete conversion of every character-creation choice or live game-state rule.
 
 The game runtime's `fatesPassage.save.v1` snapshot separately persists world position, orientation, inside/outside state, attributes/resources objects, companion state, quest/boss flags, skill cooldowns, hotbar state, dummy health, target and UI progression fragments. `fatesPassage.sheet.v1` transfers HP/MP/Energy pairs, resonance, level-up flag and selected skill charges to the sheet page. Those save structures need a dedicated compatibility importer before save migration can be considered complete.
+
+## Browser sheet handoff importer
+
+The source handoff is explicitly `{hp:[current,max], mp:[current,max], en:[current,max], res:number, lv2:0|1, ch:[...]}` under `fatesPassage.sheet.v1`. The native `BrowserSheetHandoffImporter` now imports and validates the resource pairs and resonance. For `lv2:1` it applies the source-observed level 2 state: level becomes 2, XP resets to 0, Toughness gains 3, Intellect gains 2, and Moonhowl Helm is added. The `ch` skill-charge array is intentionally not applied yet because the browser uses nullable entries and a safe null-preserving parser is still required.
