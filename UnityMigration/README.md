@@ -23,3 +23,15 @@ This directory is the **new native Unity implementation**, maintained separately
 
 ## Safety
 Do not delete or overwrite the original HTML/PWA implementation. Work on the `unity-migration` branch and merge only after verification.
+
+## Incremental performance foundation (November 18, 2026)
+- `Assets/Scripts/Core/FixedTickClock.cs`: bounded 60 Hz simulation event source, with configurable tick rate and catch-up limit.
+- `Assets/Scripts/Core/MovementMotor.cs`: CharacterController-based motion/gravity adapter (provisional; not yet matched to browser movement).
+- `Assets/Scripts/Core/FramePerformanceMonitor.cs`: opt-in FPS and average frame-time overlay.
+- UI polish planned: compact, toggleable diagnostics HUD that does not obscure the gameplay interface.
+
+### Wiring caution
+Call MovementMotor.Simulate from exactly one update loop. If using FixedTickClock, subscribe to Tick and supply movement input through an adapter. CharacterController movement is not equivalent to Rigidbody physics; validate original controls and collision before treating this as a replacement.
+
+### Verification status
+The new scripts were committed but have **not** been compiled or play-tested in Unity. No performance improvement is claimed until baseline/profiler comparisons are collected.
