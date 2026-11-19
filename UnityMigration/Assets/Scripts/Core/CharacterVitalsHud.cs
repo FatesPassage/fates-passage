@@ -22,7 +22,7 @@ namespace FatesPassage.Core
                 pixel.hideFlags = HideFlags.HideAndDontSave;
             }
             if (titleStyle != null) return;
-            titleStyle = new GUIStyle(GUI.skin.label) { fontSize = 11, fontStyle = FontStyle.Bold, alignment = TextAnchor.MiddleLeft, letterSpacing = 1 };
+            titleStyle = new GUIStyle(GUI.skin.label) { fontSize = 11, fontStyle = FontStyle.Bold, alignment = TextAnchor.MiddleLeft };
             titleStyle.normal.textColor = new Color(0.94f, 0.83f, 0.61f);
             labelStyle = new GUIStyle(GUI.skin.label) { fontSize = 10, fontStyle = FontStyle.Bold, alignment = TextAnchor.MiddleLeft };
             labelStyle.normal.textColor = new Color(0.91f, 0.93f, 0.97f);
