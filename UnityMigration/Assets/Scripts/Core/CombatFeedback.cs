@@ -16,6 +16,7 @@ namespace FatesPassage.Core
 
         private void Awake()
         {
+            if (targetRenderer == null) targetRenderer = GetComponentInChildren<Renderer>();
             if (targetRenderer == null) return;
             block = new MaterialPropertyBlock();
             targetRenderer.GetPropertyBlock(block);
