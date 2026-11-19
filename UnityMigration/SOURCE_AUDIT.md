@@ -29,3 +29,11 @@ The GitHub file endpoint returned empty text for several very large HTML files. 
 3. Replace provisional data model with verified schema.
 4. Build usable scenes and UI, import assets, then compile/test in Unity.
 5. Compare Unity behavior and visuals to the browser game.
+
+## Source-backed character sheet extraction — 2026-11-19
+
+The exact `character-sheet.html` Git blob was recovered and inspected. Its initial `D` character record identifies Corin Thistledown as Level 1, gender "Other", Woodsman sign, Verdantshade, Shadarill, Naturalist specialization; 105/105 HP, 95/95 MP, 95/95 Energy; Strength 10, Agility 15, Intellect 15, Toughness 10; 5 Resonance and 0 unspent points. It lists ten resistances at 10 with zero bonus, three active abilities (Root Snare, Nature’s Embrace, Forest Companion), and starter equipment including Verdant Tunic, Verdant Trousers and Gnarled Oak Staff.
+
+The Unity branch now contains a typed `CharacterSheetData` schema, a `CharacterSheetFactory.CreateCorinStarter()` source-backed fixture, validation, tests, and a versioned save service. These are a faithful extraction of the initial sheet fields listed above, not yet a complete conversion of every character-creation choice or live game-state rule.
+
+The game runtime's `fatesPassage.save.v1` snapshot separately persists world position, orientation, inside/outside state, attributes/resources objects, companion state, quest/boss flags, skill cooldowns, hotbar state, dummy health, target and UI progression fragments. `fatesPassage.sheet.v1` transfers HP/MP/Energy pairs, resonance, level-up flag and selected skill charges to the sheet page. Those save structures need a dedicated compatibility importer before save migration can be considered complete.
