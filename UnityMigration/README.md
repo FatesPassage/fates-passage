@@ -82,3 +82,6 @@ The visual upgrade remains a prototype style pass using Unity primitives and gen
 - `CharacterSheetFactoryTests` checks the extracted values and rejects invalid resource totals.
 - The vitals HUD has been redesigned as a lower-left dark-fantasy panel with clear resource labels, numeric values and wider bars.
 - The source browser save (`fatesPassage.save.v1`) and sheet handoff (`fatesPassage.sheet.v1`) have been inspected; full importer and round-trip compatibility remain outstanding.
+
+## Browser handoff compatibility
+`BrowserSheetHandoffImporter` reads the source game's `fatesPassage.sheet.v1` payload, validates HP/MP/Energy current-and-maximum pairs, imports Resonance, and reproduces the observed level-2 stat/helm changes. Nullable skill-charge (`ch`) transfer is intentionally deferred until a null-preserving parser is implemented. The full world save (`fatesPassage.save.v1`) remains a separate open migration task.
