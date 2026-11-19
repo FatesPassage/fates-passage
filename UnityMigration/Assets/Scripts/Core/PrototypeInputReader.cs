@@ -35,6 +35,17 @@ namespace FatesPassage.Core
 #endif
         }
 
+        public static bool DiagnosticsTogglePressed()
+        {
+#if ENABLE_INPUT_SYSTEM
+            return Keyboard.current != null && Keyboard.current.f3Key.wasPressedThisFrame;
+#elif ENABLE_LEGACY_INPUT_MANAGER
+            return Input.GetKeyDown(KeyCode.F3);
+#else
+            return false;
+#endif
+        }
+
         public static bool AttackPressed()
         {
 #if ENABLE_INPUT_SYSTEM
