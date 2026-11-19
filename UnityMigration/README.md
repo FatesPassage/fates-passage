@@ -93,3 +93,8 @@ The visual upgrade remains a prototype style pass using Unity primitives and gen
 - The core assembly definition explicitly references `Unity.InputSystem`. Confirm the Input System package is installed in Package Manager.
 - Target status HUD now uses a compact centered RPG-style target plate with a live health bar and clear defeated state.
 - This code is committed but still requires a fresh Unity compile and Play Mode test on the user's machine. Keyboard movement has been verified before this update; gamepad and new input adapter changes are not yet verified.
+
+## Browser sheet handoff completion — November 19, 2026
+The source `fatesPassage.sheet.v1` importer now preserves nullable skill-charge slots. Non-null values are applied to the matching active-skill slot; null values leave the template's existing current charges unchanged. Charge values above the source-backed maximum are rejected. The source handoff's resource pairs, resonance, and observed level-two changes remain supported. The tests were expanded for null preservation, invalid charge values, property ordering, and quoted metadata.
+
+This is a completed implementation step pending Unity compilation and EditMode test execution. It does not complete the separate full world-save importer (`fatesPassage.save.v1`) or the inventory/corpse keys.
