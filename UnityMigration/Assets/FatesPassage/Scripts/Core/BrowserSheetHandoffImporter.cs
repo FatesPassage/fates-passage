@@ -119,19 +119,24 @@ namespace FatesPassage.Core
                 int keyStart = ++i;
                 while (i < json.Length && json[i] != '"')
                 {
-                    if (json[i] == '\\') return false;
+                    if (json[i] == '\\\\' && i + 1 < json.Length) i++;
                     i++;
                 }
-                if (i >= json.Length) return false;
+                if (i >= json.Length) throw new FormatException("Handoff JSON contains an unterminated property name.");
                 string key = json.Substring(keyStart, i - keyStart);
                 i++;
                 SkipWhitespace(json, ref i);
-                if (i >= json.Length || json[i] != ':') return false;
+                if (i >= json.Length || json[i] != ':') throw new FormatException("Handoff JSON contains an invalid property.");
                 i++;
                 SkipWhitespace(json, ref i);
-                if (key != property) { i--; continue; }
-                if (i >= json.Length || json[i] != '[') throw new FormatException("Skill charge field must be an array.");
+                if (key != property)
+                {
+                    SkipJsonValue(json, ref i);
+                    i--;
+                    continue;
+                }
 
+                if (i >= json.Length || json[i] != '[') throw new FormatException("Skill charge field must be an array.");
                 var parsed = new List<int?>();
                 i++;
                 while (i < json.Length)
@@ -140,9 +145,9 @@ namespace FatesPassage.Core
                     if (i >= json.Length) throw new FormatException("Skill charge array is incomplete.");
                     if (json[i] == ']') { values = parsed; return true; }
 
-                    int start = i;
+                    int tokenStart = i;
                     while (i < json.Length && json[i] != ',' && json[i] != ']' && !char.IsWhiteSpace(json[i])) i++;
-                    string token = json.Substring(start, i - start);
+                    string token = json.Substring(tokenStart, i - tokenStart);
                     if (token == "null") parsed.Add(null);
                     else if (int.TryParse(token, NumberStyles.None, CultureInfo.InvariantCulture, out int value) && value >= 0)
                         parsed.Add(value);
@@ -156,6 +161,48 @@ namespace FatesPassage.Core
                 throw new FormatException("Skill charge array is incomplete.");
             }
             return false;
+        }
+
+        private static void SkipJsonValue(string json, ref int index)
+        {
+            if (index >= json.Length) throw new FormatException("Handoff JSON ends unexpectedly.");
+            char first = json[index];
+            if (first == '"' )
+            {
+                index++;
+                while (index < json.Length)
+                {
+                    if (json[index] == '\\\\') { index += 2; continue; }
+                    if (json[index++] == '"') return;
+                }
+                throw new FormatException("Handoff JSON contains an unterminated string.");
+            }
+
+            if (first == '{' || first == '[')
+            {
+                int nesting = 0;
+                bool inString = false;
+                for (; index < json.Length; index++)
+                {
+                    char ch = json[index];
+                    if (inString)
+                    {
+                        if (ch == '\\\\') { index++; continue; }
+                        if (ch == '"') inString = false;
+                        continue;
+                    }
+                    if (ch == '"') inString = true;
+                    else if (ch == '{' || ch == '[') nesting++;
+                    else if (ch == '}' || ch == ']')
+                    {
+                        nesting--;
+                        if (nesting == 0) { index++; return; }
+                    }
+                }
+                throw new FormatException("Handoff JSON contains an incomplete object or array.");
+            }
+
+            while (index < json.Length && json[index] != ',' && json[index] != '}') index++;
         }
 
         private static void SkipWhitespace(string value, ref int index)
