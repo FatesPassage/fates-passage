@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 
 namespace FatesPassage.Core
@@ -28,17 +30,21 @@ namespace FatesPassage.Core
             try
             {
                 var data = JsonUtility.FromJson<Handoff>(json);
-                if (data == null || !ValidPair(data.hp) || !ValidPair(data.mp) || !ValidPair(data.en) || data.res < 0)
-                    throw new FormatException("The browser sheet handoff is missing valid resource pairs or resonance.");
+                if (data == null || !ValidPair(data.hp) || !ValidPair(data.mp) ||
+                    !ValidPair(data.en) || data.res < 0 || (data.lv2 != 0 && data.lv2 != 1))
+                    throw new FormatException("The browser sheet handoff is missing valid resource pairs, resonance, or level flag.");
 
                 var copy = JsonUtility.FromJson<CharacterSheetData>(JsonUtility.ToJson(baseSheet));
+                if (copy == null) throw new FormatException("The base character sheet could not be copied.");
                 ApplyPair(data.hp, ref copy.currentHealth, ref copy.maxHealth);
                 ApplyPair(data.mp, ref copy.currentMana, ref copy.maxMana);
                 ApplyPair(data.en, ref copy.currentEnergy, ref copy.maxEnergy);
                 copy.resonance = data.res;
 
-                if (data.lv2 != 0)
+                if (data.lv2 == 1)
                 {
+                    if (copy.attributes == null || copy.equipment == null)
+                        throw new FormatException("The base character sheet is missing required collections.");
                     copy.level = 2;
                     copy.experience = 0;
                     AddAttribute(copy, "toughness", 3);
@@ -47,6 +53,11 @@ namespace FatesPassage.Core
                         copy.equipment.Add(new GearEntry("Helm", "⛑️", "Uncommon", "Moonhowl Helm",
                             "Light Helm · Uncommon · +3 Toughness, +2 Intellect"));
                 }
+
+                // The source page preserves null entries and only overwrites charges for non-null slots.
+                // Parse this one field separately because JsonUtility maps nullable integer entries to zero.
+                if (TryReadNullableIntegerArray(json, "ch", out var charges))
+                    ApplyCharges(copy, charges);
 
                 copy.Validate();
                 imported = copy;
@@ -78,5 +89,78 @@ namespace FatesPassage.Core
 
         private static bool HasGear(CharacterSheetData sheet, string name) =>
             sheet.equipment.Exists(g => g.name == name);
+
+        private static void ApplyCharges(CharacterSheetData sheet, List<int?> charges)
+        {
+            if (sheet.activeSkills == null) throw new FormatException("The base character sheet has no active skill collection.");
+            int count = Math.Min(sheet.activeSkills.Count, charges.Count);
+            for (int i = 0; i < count; i++)
+            {
+                if (!charges[i].HasValue) continue;
+                int value = charges[i].Value;
+                var skill = sheet.activeSkills[i];
+                if (skill == null || value < 0 || value > skill.maximumCharges)
+                    throw new FormatException("Skill charge value is outside the valid range at slot " + i + ".");
+                skill.currentCharges = value;
+            }
+        }
+
+        private static bool TryReadNullableIntegerArray(string json, string property, out List<int?> values)
+        {
+            values = null;
+            int depth = 0;
+            for (int i = 0; i < json.Length; i++)
+            {
+                char ch = json[i];
+                if (ch == '{') { depth++; continue; }
+                if (ch == '}') { depth--; continue; }
+                if (depth != 1 || ch != '"') continue;
+
+                int keyStart = ++i;
+                while (i < json.Length && json[i] != '"')
+                {
+                    if (json[i] == '\\') return false;
+                    i++;
+                }
+                if (i >= json.Length) return false;
+                string key = json.Substring(keyStart, i - keyStart);
+                i++;
+                SkipWhitespace(json, ref i);
+                if (i >= json.Length || json[i] != ':') return false;
+                i++;
+                SkipWhitespace(json, ref i);
+                if (key != property) { i--; continue; }
+                if (i >= json.Length || json[i] != '[') throw new FormatException("Skill charge field must be an array.");
+
+                var parsed = new List<int?>();
+                i++;
+                while (i < json.Length)
+                {
+                    SkipWhitespace(json, ref i);
+                    if (i >= json.Length) throw new FormatException("Skill charge array is incomplete.");
+                    if (json[i] == ']') { values = parsed; return true; }
+
+                    int start = i;
+                    while (i < json.Length && json[i] != ',' && json[i] != ']' && !char.IsWhiteSpace(json[i])) i++;
+                    string token = json.Substring(start, i - start);
+                    if (token == "null") parsed.Add(null);
+                    else if (int.TryParse(token, NumberStyles.None, CultureInfo.InvariantCulture, out int value) && value >= 0)
+                        parsed.Add(value);
+                    else throw new FormatException("Skill charges must contain only nonnegative integers or null.");
+
+                    SkipWhitespace(json, ref i);
+                    if (i < json.Length && json[i] == ',') { i++; continue; }
+                    if (i < json.Length && json[i] == ']') { values = parsed; return true; }
+                    throw new FormatException("Skill charge array has invalid separators.");
+                }
+                throw new FormatException("Skill charge array is incomplete.");
+            }
+            return false;
+        }
+
+        private static void SkipWhitespace(string value, ref int index)
+        {
+            while (index < value.Length && char.IsWhiteSpace(value[index])) index++;
+        }
     }
 }
