@@ -74,3 +74,11 @@ The editor scene builder now generates a stylized dark-fantasy arena with reusab
 To apply the updated builder to an existing local Unity project, replace `Assets/Editor/PrototypeSceneBuilder.cs` with the latest branch copy, let Unity recompile, then run **Fate's Passage > Build Combat Test Scene** again. This regenerates `Assets/Scenes/CombatPrototype.unity`; save or back up any local edits to that scene first.
 
 The visual upgrade remains a prototype style pass using Unity primitives and generated materials. Original Fate's Passage models, textures, environments and effects still need to be audited and ported. Re-run in Play Mode and check the Console before considering it verified.
+
+## Source-derived character sheet work
+- `CharacterSheetData` defines a typed, validated native model for the original character-sheet concepts.
+- `CharacterSheetFactory.CreateCorinStarter()` reproduces the initial Corin sheet values extracted from `character-sheet.html`: Naturalist / Woodsman, Verdantshade, 105 HP, 95 Mana, 95 Energy, four attributes, ten resistances, three active skills, and three equipped starter items.
+- `CharacterSheetSaveService` writes validated JSON with a temporary file and backup rollback path.
+- `CharacterSheetFactoryTests` checks the extracted values and rejects invalid resource totals.
+- The vitals HUD has been redesigned as a lower-left dark-fantasy panel with clear resource labels, numeric values and wider bars.
+- The source browser save (`fatesPassage.save.v1`) and sheet handoff (`fatesPassage.sheet.v1`) have been inspected; full importer and round-trip compatibility remain outstanding.
