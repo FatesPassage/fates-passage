@@ -56,3 +56,11 @@ Do not mark an issue complete merely because code was committed. Require Unity c
 - Reopened the original browser runtime and documented exact world-save fields and restore semantics in `SOURCE_AUDIT.md`.
 - Interface polish: the lower-left vitals panel now anchors inside `Screen.safeArea` and scales down on narrow screens.
 - All new code and tests are committed to `unity-migration`; local Unity compile and test-runner verification are still required.
+
+## Compile recovery batch — November 19, 2026
+- Fixed malformed escaped newlines in `PrototypeInputReader.cs` on the migration branch; F3 diagnostic toggle remains available through the shared input facade.
+- Removed the redundant `Assets/Tests/EditMode/FatesPassage.EditModeTests.asmdef` to avoid duplicate assembly names; retained the `Assets/FatesPassage/Tests/EditMode` definition.
+- Updated `PerformanceHud` to use shared input and a responsive, safe-area-aware top-left overlay with resize-aware typography.
+- Local Unity compilation, EditMode tests, and Play Mode verification **not yet confirmed** after these commits.
+- User action: refresh the `unity-migration` branch locally and send the first remaining Console errors, if any.
+- The GitHub issue tracker has no open issue tickets; this Markdown file remains the active migration register.
