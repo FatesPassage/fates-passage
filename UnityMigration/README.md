@@ -67,3 +67,10 @@ Unity **Active Input Handling** must be set to **Input Manager (Old)** or **Both
 - Scene generation and tests have not run in a Unity Editor here.
 - The visual HUD is a diagnostic stand-in, not a replacement for the original interface.
 - Do not merge to main until Unity compile, test runner, gameplay and visual parity checks pass.
+
+## Visual prototype upgrade
+The editor scene builder now generates a stylized dark-fantasy arena with reusable saved materials (obsidian stone, aged bronze, jade player, ember training dummy), perimeter architecture, pillars, inlaid floor lines, warm directional lighting, cool point fill, and restrained distance fog. Camera-relative movement is wired to the generated camera transform.
+
+To apply the updated builder to an existing local Unity project, replace `Assets/Editor/PrototypeSceneBuilder.cs` with the latest branch copy, let Unity recompile, then run **Fate's Passage > Build Combat Test Scene** again. This regenerates `Assets/Scenes/CombatPrototype.unity`; save or back up any local edits to that scene first.
+
+The visual upgrade remains a prototype style pass using Unity primitives and generated materials. Original Fate's Passage models, textures, environments and effects still need to be audited and ported. Re-run in Play Mode and check the Console before considering it verified.
