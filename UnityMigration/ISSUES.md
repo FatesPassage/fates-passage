@@ -5,10 +5,11 @@ Completed work is intentionally kept out of this list. Active issue numbering re
 ## Open issues
 
 ### Issue 1 — Browser save compatibility importer
-- Extract the complete `fatesPassage.save.v1` and `fatesPassage.sheet.v1` schemas from the original game.
-- Map world position, orientation, quests, companion, boss state, skills/cooldowns, hotbars, resources, attributes and inventory into versioned Unity save data.
-- Build a safe JSON import preview and preserve the original browser save untouched.
-- Add round-trip and malformed-save tests.
+- [Source audit complete] Recover exact `fatesPassage.save.v1` field inventory, restore behavior, and separate `fatesPassage.inv.v1` / `fatesPassage.corpses.v1` keys from the original `fates-passage.html` source.
+- [Implementation complete; Unity verification pending] Finish `fatesPassage.sheet.v1` handoff including nullable skill charges, null-preserving slot behavior, and source-observed level-two bonuses.
+- Build a safe, previewable importer for the full world snapshot, including position/orientation, companion transforms, primitive state maps, progression flags, boss state, cooldowns, hot-over-time records, dummies, target and auto-attack state.
+- Validate nested arrays and preserve unknown primitive fields; treat `lvT` / `xpW` as UI hints rather than authoritative progression.
+- Add round-trip, malformed-save, compatibility and no-data-loss tests; never modify the original browser save.
 
 ### Issue 2 — Full character-creation parity
 - Recover the exact selectable ancestry, specialization, appearance, sign and starting-choice data from `character-creation.html`.
@@ -47,3 +48,11 @@ Do not mark an issue complete merely because code was committed. Require Unity c
 - Prototype target HUD received a cleaner centered target plate, live health bar, and defeated state.
 - Performance diagnostics now use the shared input facade and retain the compact optional F3 panel.
 - The previous keyboard movement test predates this input refactor; re-test before relying on it.
+
+
+## Latest batch — November 19, 2026
+- Committed null-preserving parsing for the source handoff's `ch` array. Null charge entries preserve existing template values; explicit charges are validated against each skill's maximum.
+- Added EditMode cases for non-null charge import, null-slot preservation, invalid charge values, reordered JSON properties and escaped quoted metadata.
+- Reopened the original browser runtime and documented exact world-save fields and restore semantics in `SOURCE_AUDIT.md`.
+- Interface polish: the lower-left vitals panel now anchors inside `Screen.safeArea` and scales down on narrow screens.
+- All new code and tests are committed to `unity-migration`; local Unity compile and test-runner verification are still required.
