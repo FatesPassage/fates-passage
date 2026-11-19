@@ -50,3 +50,20 @@ The new scripts were committed but have **not** been compiled or play-tested in 
 - [ ] Create a test scene with CharacterController, MovementMotor, PlayerInputAdapter and a camera
 - [ ] Add CharacterVitalsBehaviour, Combatant, CombatFeedback, CharacterVitalsHud and verify hit feedback and resource UI
 - [ ] Verify performance and gameplay against the original HTML implementation
+
+## Combat prototype scene generator
+From Unity Editor, choose **Fate's Passage > Build Combat Test Scene**. This creates `Assets/Scenes/CombatPrototype.unity` with a capsule player, a training dummy, a camera, lighting, an arena floor and prototype HUD. The scene is not an imported original-game level.
+
+### Temporary controls
+- WASD / arrow keys: move via legacy Horizontal/Vertical input axes
+- Space: attack the training dummy within 3 Unity units
+- F3: toggle the compact FPS overlay
+
+Unity **Active Input Handling** must be set to **Input Manager (Old)** or **Both** for these temporary controls. The scene uses default primitive meshes, not original game assets. Test it in Play Mode before claiming it is playable.
+
+### Current prototype limitations
+- Enemy is stationary; no AI, animations, targeting UI, or loot.
+- Abilities and combat values are provisional, not validated against browser rules.
+- Scene generation and tests have not run in a Unity Editor here.
+- The visual HUD is a diagnostic stand-in, not a replacement for the original interface.
+- Do not merge to main until Unity compile, test runner, gameplay and visual parity checks pass.
