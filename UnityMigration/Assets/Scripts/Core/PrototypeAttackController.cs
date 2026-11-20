@@ -14,6 +14,8 @@ namespace FatesPassage.Core
         private CharacterVitalsBehaviour vitals;
         private Combatant attacker;
         private AbilityRuntime attack;
+        private int successfulHits;
+        public int SuccessfulHits => successfulHits;
 
         private void Awake()
         {
@@ -30,6 +32,7 @@ namespace FatesPassage.Core
             if ((target.transform.position - transform.position).sqrMagnitude > attackRange * attackRange) return;
             if (vitals == null || vitals.Vitals == null || !attack.TryActivate(vitals.Vitals)) return;
             attacker.Attack(target, damage);
+            successfulHits++;
         }
 
         public void SetTarget(Combatant combatTarget) => target = combatTarget;
