@@ -85,3 +85,10 @@ Do not mark an issue complete merely because code was committed. Require Unity c
 - Preserve combined states (e.g. movement + Q/E, diagonals), continuous key-down/key-up semantics, mouse-look/interaction where verified, and touch/multitouch gestures after source inspection.
 - The current Unity `PrototypeInputReader` supports WASD/arrows, gamepad, attack and diagnostics only. **Q/E, mouse and touch parity are not implemented or verified.**
 - Next: recover the exact gameplay controls and touch handler logic from the original source, define a context-sensitive input action specification, implement Unity adapters, and test combined inputs on desktop and mobile.
+
+## Source-backed controls parity batch — November 19, 2026
+- Inspected the original `fates-passage.html` Git blob: game loop reads W/A/S/D and arrows for movement; Q adds `dt*1.6` to yaw target and E subtracts it. Inputs are independent, so simultaneous movement + turning is supported. Original also binds F interaction, Space jump, 1–3 skill casts, wheel zoom, and mobile pointer gestures.
+- Implemented Q/E yaw in the Unity camera through a shared input facade, including modern Input System and legacy fallback; rotation runs independently of WASD.
+- Added compact in-game control guidance to the target HUD.
+- **Not yet verified:** exact camera drag semantics, touch UI parity, Space jump versus provisional Space attack, F interaction, skill keys, and full mobile control affordances. Do not claim full parity until these are implemented and tested.
+- **Local verification needed:** refresh three updated C# files; test W+Q, W+E, W+A+Q, Q+E cancellation, and camera movement while running.
