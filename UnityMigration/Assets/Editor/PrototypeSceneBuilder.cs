@@ -143,7 +143,9 @@ namespace FatesPassage.EditorTools
 
             var hud = new GameObject("Diagnostics and Vitals");
             hud.AddComponent<PerformanceHud>();
-            hud.AddComponent<PrototypeCombatStatus>().SetEnemy(enemy.GetComponent<CharacterVitalsBehaviour>());
+            var combatStatus = hud.AddComponent<PrototypeCombatStatus>();
+            combatStatus.SetEnemy(enemy.GetComponent<CharacterVitalsBehaviour>());
+            combatStatus.SetAttacker(attack);
             var vitalsHud = hud.AddComponent<CharacterVitalsHud>();
             var so = new SerializedObject(vitalsHud);
             so.FindProperty("character").objectReferenceValue = player.GetComponent<CharacterVitalsBehaviour>();
