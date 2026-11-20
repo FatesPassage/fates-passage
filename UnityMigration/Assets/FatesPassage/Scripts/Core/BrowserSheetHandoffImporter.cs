@@ -119,7 +119,7 @@ namespace FatesPassage.Core
                 int keyStart = ++i;
                 while (i < json.Length && json[i] != '"')
                 {
-                    if (json[i] == '\\\\' && i + 1 < json.Length) i++;
+                    if (json[i] == '\\' && i + 1 < json.Length) i++;
                     i++;
                 }
                 if (i >= json.Length) throw new FormatException("Handoff JSON contains an unterminated property name.");
@@ -172,7 +172,7 @@ namespace FatesPassage.Core
                 index++;
                 while (index < json.Length)
                 {
-                    if (json[index] == '\\\\') { index += 2; continue; }
+                    if (json[index] == '\\') { index += 2; continue; }
                     if (json[index++] == '"') return;
                 }
                 throw new FormatException("Handoff JSON contains an unterminated string.");
@@ -187,7 +187,7 @@ namespace FatesPassage.Core
                     char ch = json[index];
                     if (inString)
                     {
-                        if (ch == '\\\\') { index++; continue; }
+                        if (ch == '\\') { index++; continue; }
                         if (ch == '"') inString = false;
                         continue;
                     }
