@@ -6,6 +6,7 @@ namespace FatesPassage.Core
     public sealed class PrototypeCombatStatus : MonoBehaviour
     {
         [SerializeField] private CharacterVitalsBehaviour enemy;
+        [SerializeField] private PrototypeAttackController attacker;
         private GUIStyle titleStyle;
         private GUIStyle valueStyle;
         private Texture2D background;
@@ -13,6 +14,7 @@ namespace FatesPassage.Core
         private Texture2D fill;
 
         public void SetEnemy(CharacterVitalsBehaviour value) => enemy = value;
+        public void SetAttacker(PrototypeAttackController value) => attacker = value;
 
         private static Texture2D Solid(Color color)
         {
@@ -53,7 +55,7 @@ namespace FatesPassage.Core
             float y = Screen.height - safe.yMax + 14f;
             titleStyle.fontSize = Mathf.Clamp(Mathf.RoundToInt(Screen.height * 0.019f), 12, 18);
             valueStyle.fontSize = Mathf.Clamp(Mathf.RoundToInt(Screen.height * 0.016f), 11, 15);
-            GUI.DrawTexture(new Rect(x, y, width, 56f), background);
+            GUI.DrawTexture(new Rect(x, y, width, 72f), background);
             GUI.Label(new Rect(x + 14f, y + 5f, width * 0.58f, 25f),
                 vitals.IsAlive ? "TRAINING DUMMY" : "TARGET DEFEATED", titleStyle);
             GUI.Label(new Rect(x + width * 0.60f, y + 5f, width * 0.35f, 25f),
@@ -62,6 +64,8 @@ namespace FatesPassage.Core
             GUI.DrawTexture(new Rect(x + 14f, y + 35f, barWidth, 8f), track);
             float ratio = vitals.MaxHealth > 0f ? Mathf.Clamp01(vitals.Health / vitals.MaxHealth) : 0f;
             if (ratio > 0f) GUI.DrawTexture(new Rect(x + 14f, y + 35f, barWidth * ratio, 8f), fill);
+            GUI.Label(new Rect(x + 14f, y + 48f, width - 28f, 18f),
+                attacker == null ? "SPACE / GAMEPAD SOUTH  •  ATTACK" : $"HITS {attacker.SuccessfulHits}  •  SPACE / GAMEPAD SOUTH", valueStyle);
         }
 
         private void OnDestroy()
