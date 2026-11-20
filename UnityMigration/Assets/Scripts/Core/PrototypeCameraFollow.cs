@@ -14,6 +14,7 @@ namespace FatesPassage.Core
         [SerializeField, Range(12f, 75f)] private float pitch = 32f;
         [SerializeField, Min(2f)] private float distance = 9f;
         [SerializeField, Min(0.01f)] private float dragSensitivity = 0.2f;
+        [SerializeField, Min(0f)] private float keyboardYawDegreesPerSecond = 91.67f;
         private int rightTouchId = -1;
         private Vector2 previousTouch;
 
@@ -21,6 +22,9 @@ namespace FatesPassage.Core
 
         private void Update()
         {
+            // Original HTML: Q/E independently rotate yaw at 1.6 radians/second.
+            // This runs alongside movement so W+Q, W+E and diagonal combinations work.
+            yaw += PrototypeInputReader.ReadCameraYawAxis() * keyboardYawDegreesPerSecond * Time.deltaTime;
 #if ENABLE_INPUT_SYSTEM
             var mouse = Mouse.current;
             if (mouse != null && mouse.leftButton.isPressed)
