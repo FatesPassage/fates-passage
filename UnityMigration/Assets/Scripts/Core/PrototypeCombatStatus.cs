@@ -65,7 +65,7 @@ namespace FatesPassage.Core
             float ratio = vitals.MaxHealth > 0f ? Mathf.Clamp01(vitals.Health / vitals.MaxHealth) : 0f;
             if (ratio > 0f) GUI.DrawTexture(new Rect(x + 14f, y + 35f, barWidth * ratio, 8f), fill);
             GUI.Label(new Rect(x + 14f, y + 48f, width - 28f, 18f),
-                attacker == null ? "SPACE / GAMEPAD SOUTH  •  ATTACK" : $"HITS {attacker.SuccessfulHits}  •  SPACE / GAMEPAD SOUTH", valueStyle);
+                attacker == null ? "WASD MOVE  •  Q/E TURN  •  SPACE ATTACK" : $"HITS {attacker.SuccessfulHits}  •  Q/E TURN  •  SPACE ATTACK", valueStyle);
         }
 
         private void OnDestroy()
