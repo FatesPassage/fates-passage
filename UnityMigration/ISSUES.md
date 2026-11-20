@@ -72,3 +72,9 @@ Do not mark an issue complete merely because code was committed. Require Unity c
 - Scene builder updated; rerun **Fate's Passage > Build Combat Test Scene** after backing up local scene edits to see the new HUD.
 - Open verification: Space attack reduces dummy HP, hit counter increases, and the dummy can be defeated; gamepad and F3 still require validation.
 - These code changes are committed but not compiled or play-tested in the user's local Unity installation.
+
+## Control-parity batch — November 19, 2026
+- Reopened the original `fates-passage.html` Git blob and documented browser keyboard/mouse/mobile controls in `CONTROL_PARITY.md`.
+- Implemented provisional desktop mouse orbit/wheel zoom and mobile left movement/right look touch zones in Unity prototype.
+- **Important parity gap:** Space remains temporary prototype attack, but original browser Space means jump. F interaction, 1–3 abilities, mobile action buttons and pinch zoom remain open.
+- Local Unity compilation, gesture conflict tests, mobile build and UI verification are still pending. No claim of full parity.
