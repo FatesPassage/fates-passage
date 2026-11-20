@@ -60,6 +60,20 @@ namespace FatesPassage.Core
 #endif
         }
 
+        /// <summary>Original HTML Q rotates left and E rotates right; opposite keys cancel.</summary>
+        public static float ReadCameraYawAxis()
+        {
+#if ENABLE_INPUT_SYSTEM
+            var keyboard = Keyboard.current;
+            if (keyboard == null) return 0f;
+            return (keyboard.qKey.isPressed ? 1f : 0f) - (keyboard.eKey.isPressed ? 1f : 0f);
+#elif ENABLE_LEGACY_INPUT_MANAGER
+            return (Input.GetKey(KeyCode.Q) ? 1f : 0f) - (Input.GetKey(KeyCode.E) ? 1f : 0f);
+#else
+            return 0f;
+#endif
+        }
+
         public static bool DiagnosticsTogglePressed()
         {
 #if ENABLE_INPUT_SYSTEM
