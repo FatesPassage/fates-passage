@@ -1,0 +1,268 @@
+{
+  "source": "character-creation.html",
+  "sourceBlob": "c3a10c34ec5289897ed974ecede9f5e1df1eee6f",
+  "specializations": [
+    {
+      "id": "fire",
+      "icon": "🔥",
+      "name": "Fire Adept",
+      "color": "#e8512b",
+      "resource": "Mana",
+      "stats": [
+        5,
+        10,
+        20,
+        15
+      ],
+      "armor": "Light",
+      "roles": "DPS · Support · AoE"
+    },
+    {
+      "id": "poison",
+      "icon": "🧪",
+      "name": "Poison Adept",
+      "color": "#7ac03a",
+      "resource": "Mana",
+      "stats": [
+        10,
+        10,
+        20,
+        10
+      ],
+      "armor": "Light",
+      "roles": "DPS · Support · Life Leeching"
+    },
+    {
+      "id": "frost",
+      "icon": "❄️",
+      "name": "Frost Adept",
+      "color": "#4fb4e8",
+      "resource": "Mana",
+      "stats": [
+        10,
+        5,
+        20,
+        15
+      ],
+      "armor": "Light",
+      "roles": "DPS · Crowd Control · Support"
+    },
+    {
+      "id": "shadow",
+      "icon": "🌑",
+      "name": "Shadow Adept",
+      "color": "#8a5bd1",
+      "resource": "Mana",
+      "stats": [
+        5,
+        15,
+        20,
+        10
+      ],
+      "armor": "Light",
+      "roles": "DPS · Crowd Control · Support"
+    },
+    {
+      "id": "light",
+      "icon": "✨",
+      "name": "Light Touched",
+      "color": "#f2c94c",
+      "resource": "Mana",
+      "stats": [
+        5,
+        5,
+        20,
+        20
+      ],
+      "armor": "Light + light shield",
+      "roles": "Healing · DPS · Support"
+    },
+    {
+      "id": "crusader",
+      "icon": "⚔️",
+      "name": "Crusader",
+      "color": "#3b6fd1",
+      "resource": "Energy",
+      "stats": [
+        15,
+        5,
+        15,
+        15
+      ],
+      "armor": "Medium + light shield",
+      "roles": "Melee Heal · Tank · Support"
+    },
+    {
+      "id": "shield",
+      "icon": "🛡️",
+      "name": "Shieldbearer",
+      "color": "#b8c0cc",
+      "resource": "Energy",
+      "stats": [
+        15,
+        10,
+        5,
+        20
+      ],
+      "armor": "Medium + medium shield",
+      "roles": "Tank · Support · Healing"
+    },
+    {
+      "id": "tactician",
+      "icon": "🎯",
+      "name": "Tactician",
+      "color": "#a855c7",
+      "resource": "Energy",
+      "stats": [
+        10,
+        20,
+        10,
+        10
+      ],
+      "armor": "Medium",
+      "roles": "DPS · Support · Crowd Control"
+    },
+    {
+      "id": "warleader",
+      "icon": "📣",
+      "name": "Warleader",
+      "color": "#e8892b",
+      "resource": "Energy",
+      "stats": [
+        20,
+        5,
+        10,
+        15
+      ],
+      "armor": "Medium + medium shield",
+      "roles": "DPS · Support · Buffs"
+    },
+    {
+      "id": "naturalist",
+      "icon": "🌿",
+      "name": "Naturalist",
+      "color": "#3fa55a",
+      "resource": "Mana",
+      "stats": [
+        10,
+        15,
+        15,
+        10
+      ],
+      "armor": "Light",
+      "roles": "Heal · Support · Crowd Control"
+    }
+  ],
+  "signs": [
+    {
+      "id": "nobleman",
+      "icon": "🎩",
+      "name": "Nobleman",
+      "flavor": "Authority; others respect your presence, allies fight harder in your name, lessons cut deeper.",
+      "bonuses": [
+        "+10% Reputation Gain",
+        "+5% Experience Gain",
+        "+10% Mercenary Damage & Healing"
+      ]
+    },
+    {
+      "id": "strongman",
+      "icon": "🏋️",
+      "name": "Strongman",
+      "flavor": "Raw physical dominance; faster, tougher against every harm, carrying more. Your body is weapon and vessel.",
+      "bonuses": [
+        "+10% Movement Speed",
+        "+10% Resist All",
+        "+10% Inventory Capacity"
+      ]
+    },
+    {
+      "id": "wiseman",
+      "icon": "🦉",
+      "name": "Wiseman",
+      "flavor": "Scholars and seekers; thought flows freely, resonance builds with purpose, the world teaches faster.",
+      "bonuses": [
+        "−10% Mana & Energy Costs",
+        "+10% Resonance Gain",
+        "+5% Experience Gain"
+      ]
+    },
+    {
+      "id": "swordsman",
+      "icon": "⚜️",
+      "name": "Swordsman",
+      "flavor": "Forged in combat; efficient movement, allies strike with your fury, battlefield yields spoils.",
+      "bonuses": [
+        "+10% Movement Speed",
+        "+10% Mercenary Damage & Healing",
+        "+10% Consumable Drop Chance"
+      ]
+    },
+    {
+      "id": "huntsman",
+      "icon": "🐺",
+      "name": "Huntsman",
+      "flavor": "Stalks prey across any terrain; hardened by every hazard, fast, finds what others cannot.",
+      "bonuses": [
+        "+10% Resist All",
+        "+10% Movement Speed",
+        "+10% Consumable Drop Chance"
+      ]
+    },
+    {
+      "id": "craftsman",
+      "icon": "🛠️",
+      "name": "Craftsman",
+      "flavor": "Builders and collectors; carry more, find more, rare materials drawn to your hands.",
+      "bonuses": [
+        "+10% Inventory Capacity",
+        "+10% Consumable Drop Chance",
+        "+5% Item Rarity Drop Chance"
+      ]
+    },
+    {
+      "id": "clergyman",
+      "icon": "🙏",
+      "name": "Clergyman",
+      "flavor": "Touched by the divine; resonance grows with prayer, reputation precedes you, followers blessed.",
+      "bonuses": [
+        "+10% Resonance Gain",
+        "+10% Reputation Gain",
+        "+10% Mercenary Damage & Healing"
+      ]
+    },
+    {
+      "id": "woodsman",
+      "icon": "🌲",
+      "name": "Woodsman",
+      "flavor": "Lives where civilization ends; the wilds toughen you against everything, reward patience with rarer finds, cheaper natural energy.",
+      "bonuses": [
+        "+5% Item Rarity Drop Chance",
+        "+10% Resist All",
+        "−10% Mana & Energy Costs"
+      ]
+    },
+    {
+      "id": "tradesman",
+      "icon": "🪙",
+      "name": "Tradesman",
+      "flavor": "Deals in value; name opens doors, pack holds more, finest goods find you.",
+      "bonuses": [
+        "+10% Reputation Gain",
+        "+10% Inventory Capacity",
+        "+5% Item Rarity Drop Chance"
+      ]
+    },
+    {
+      "id": "starman",
+      "icon": "🌌",
+      "name": "Starman",
+      "flavor": "Touched beyond the mortal realm; resonance pulses cosmic, elemental costs less, growth accelerates.",
+      "bonuses": [
+        "+10% Resonance Gain",
+        "−10% Mana & Energy Costs",
+        "+5% Experience Gain"
+      ]
+    }
+  ]
+}
