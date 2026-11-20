@@ -64,3 +64,11 @@ Do not mark an issue complete merely because code was committed. Require Unity c
 - Local Unity compilation, EditMode tests, and Play Mode verification **not yet confirmed** after these commits.
 - User action: refresh the `unity-migration` branch locally and send the first remaining Console errors, if any.
 - The GitHub issue tracker has no open issue tickets; this Markdown file remains the active migration register.
+
+## Play Mode milestone and combat visibility — November 19, 2026
+- User confirmed the Unity combat arena loads and the player moves in Play Mode. Prior compile and scene-opening blockers are removed from the active troubleshooting queue.
+- Added a safe-area-aware, proportional training-target health plate with clearer defeat feedback.
+- Exposed a successful-hit counter in the temporary attack controller and wired it into the generated scene HUD to make attack verification observable.
+- Scene builder updated; rerun **Fate's Passage > Build Combat Test Scene** after backing up local scene edits to see the new HUD.
+- Open verification: Space attack reduces dummy HP, hit counter increases, and the dummy can be defeated; gamepad and F3 still require validation.
+- These code changes are committed but not compiled or play-tested in the user's local Unity installation.
