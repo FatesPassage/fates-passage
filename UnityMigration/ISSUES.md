@@ -78,3 +78,10 @@ Do not mark an issue complete merely because code was committed. Require Unity c
 - Implemented provisional desktop mouse orbit/wheel zoom and mobile left movement/right look touch zones in Unity prototype.
 - **Important parity gap:** Space remains temporary prototype attack, but original browser Space means jump. F interaction, 1–3 abilities, mobile action buttons and pinch zoom remain open.
 - Local Unity compilation, gesture conflict tests, mobile build and UI verification are still pending. No claim of full parity.
+
+## Original controls parity — November 19, 2026
+- User explicitly requires original HTML keyboard, mouse, and mobile controls, including Q/E and simultaneous-key combinations.
+- Source check: `fates-passage.html` contains a control mapping `q:'rl',e:'rr'` (rotate left/right) in one context, and separate gameplay keydown/keyup handling that records lowercase keys. Do not assume this map is the entire gameplay control scheme.
+- Preserve combined states (e.g. movement + Q/E, diagonals), continuous key-down/key-up semantics, mouse-look/interaction where verified, and touch/multitouch gestures after source inspection.
+- The current Unity `PrototypeInputReader` supports WASD/arrows, gamepad, attack and diagnostics only. **Q/E, mouse and touch parity are not implemented or verified.**
+- Next: recover the exact gameplay controls and touch handler logic from the original source, define a context-sensitive input action specification, implement Unity adapters, and test combined inputs on desktop and mobile.
